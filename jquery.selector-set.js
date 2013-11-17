@@ -2,6 +2,7 @@
   var document = window.document;
   var SelectorSet = window.SelectorSet;
   var originalEventAdd = $.event.add;
+  var originalEventRemove = $.event.remove;
   var handleObjs = {};
 
   function selectorSetHandlers(event) {
@@ -53,8 +54,18 @@
       }
       handleObj.selectorSet.add(selector, handler);
     } else {
-      // console.trace("can't optimize handler", arguments);
       originalEventAdd.call(this, elem, types, handler, data, selector);
+    }
+  };
+
+  $.event.remove = function(elem, types, handler, selector, mappedTypes) {
+    if (elem === document && selector) {
+      var handleObj = handleObjs[types];
+      if (handleObj) {
+        handleObj.selectorSet.remove(selector, handler);
+      }
+    } else {
+      originalEventRemove.call(this, elem, types, handler, selector, mappedTypes);
     }
   };
 })(window, jQuery);
