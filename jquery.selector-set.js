@@ -1,3 +1,8 @@
+// jQuery SelectorSet
+//
+//= require jquery
+//= require selector-set
+
 (function(window, $) {
   var document = window.document;
   var SelectorSet = window.SelectorSet;
