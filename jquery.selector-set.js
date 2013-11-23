@@ -5,6 +5,8 @@
   var originalEventRemove = $.event.remove;
   var handleObjs = {};
 
+  $.expr.cacheLength = 500;
+
   if (!SelectorSet) {
     throw "SelectorSet undefined - https://github.com/josh/jquery-selector-set";
   }
@@ -56,6 +58,7 @@
         };
         originalEventAdd.call(this, elem, types, handleObj);
       }
+      $.find.compile(selector);
       handleObj.selectorSet.add(selector, handler);
     } else {
       originalEventAdd.call(this, elem, types, handler, data, selector);
