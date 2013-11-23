@@ -120,6 +120,26 @@ test('bind/unbind delegated universal click handler to document', function() {
   equal(clicked, 2);
 });
 
+test('bind/unbind delegated sizzle-only click handler to document', function() {
+  var clicked = 0;
+
+  function handle() {
+    clicked++;
+  }
+
+  equal(clicked, 0);
+
+  $(document).on('click', ':visible', handle);
+  $(document).trigger('click');
+  equal(clicked, 0);
+  $(document.body).trigger('click');
+  equal(clicked, 2);
+
+  $(document).off('click', ':visible', handle);
+  $(document.body).trigger('click');
+  equal(clicked, 2);
+});
+
 test('bind/unbind namespaced click handler to document', function() {
   var clicked = 0;
 

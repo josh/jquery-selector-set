@@ -62,6 +62,7 @@
           handler: selectorSetHandler,
           selectorSet: new SelectorSet()
         };
+        handleObj.selectorSet.matchesSelector = $.find.matchesSelector;
         originalEventAdd.call(this, elem, types, handleObj);
       }
       handleObj.selectorSet.add(selector, handler);
