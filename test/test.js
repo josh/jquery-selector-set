@@ -77,3 +77,91 @@ test('bind/unbind delegated namespaced click handler to document', function() {
   $(document.body).trigger('click');
   equal(clicked, 1);
 });
+
+test('return false from delegated document click handler', function() {
+  function handle() {
+    return false;
+  }
+
+  var event;
+
+  $(document).on('click', 'body', handle);
+  event = $.Event('click');
+  $(document.body).trigger(event);
+  equal(event.isDefaultPrevented(), true);
+  equal(event.isPropagationStopped(), true);
+  equal(event.result, false);
+
+  $(document).off('click', 'body', handle);
+  event = $.Event('click');
+  $(document.body).trigger(event);
+  equal(event.isDefaultPrevented(), false);
+  equal(event.isPropagationStopped(), false);
+  equal(event.result, undefined);
+});
+
+test('preventDefault from delegated document click handler', function() {
+  function handle(event) {
+    event.preventDefault();
+  }
+
+  var event;
+
+  $(document).on('click', 'body', handle);
+  event = $.Event('click');
+  $(document.body).trigger(event);
+  equal(event.isDefaultPrevented(), true);
+  equal(event.isPropagationStopped(), false);
+  equal(event.result, undefined);
+
+  $(document).off('click', 'body', handle);
+  event = $.Event('click');
+  $(document.body).trigger(event);
+  equal(event.isDefaultPrevented(), false);
+  equal(event.isPropagationStopped(), false);
+  equal(event.result, undefined);
+});
+
+test('stopPropogation from delegated document click handler', function() {
+  function handle(event) {
+    event.stopPropagation();
+  }
+
+  var event;
+
+  $(document).on('click', 'body', handle);
+  event = $.Event('click');
+  $(document.body).trigger(event);
+  equal(event.isDefaultPrevented(), false);
+  equal(event.isPropagationStopped(), true);
+  equal(event.result, undefined);
+
+  $(document).off('click', 'body', handle);
+  event = $.Event('click');
+  $(document.body).trigger(event);
+  equal(event.isDefaultPrevented(), false);
+  equal(event.isPropagationStopped(), false);
+  equal(event.result, undefined);
+});
+
+test('stopImmediatePropagation from delegated document click handler', function() {
+  function handle(event) {
+    event.stopImmediatePropagation();
+  }
+
+  var event;
+
+  $(document).on('click', 'body', handle);
+  event = $.Event('click');
+  $(document.body).trigger(event);
+  equal(event.isDefaultPrevented(), false);
+  equal(event.isPropagationStopped(), true);
+  equal(event.result, undefined);
+
+  $(document).off('click', 'body', handle);
+  event = $.Event('click');
+  $(document.body).trigger(event);
+  equal(event.isDefaultPrevented(), false);
+  equal(event.isPropagationStopped(), false);
+  equal(event.result, undefined);
+});
