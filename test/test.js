@@ -37,3 +37,43 @@ test('bind/unbind delegated click handler to document', function() {
   $(document.body).trigger('click');
   equal(clicked, 1);
 });
+
+test('bind/unbind namespaced click handler to document', function() {
+  var clicked = 0;
+
+  function handle() {
+    clicked++;
+  }
+
+  equal(clicked, 0);
+
+  $(document).on('click.foo', handle);
+  $(document).trigger('click');
+  equal(clicked, 1);
+  $(document.body).trigger('click');
+  equal(clicked, 2);
+
+  $(document).off('click.foo', handle);
+  $(document).trigger('click');
+  equal(clicked, 2);
+});
+
+test('bind/unbind delegated namespaced click handler to document', function() {
+  var clicked = 0;
+
+  function handle() {
+    clicked++;
+  }
+
+  equal(clicked, 0);
+
+  $(document).on('click.foo', 'body', handle);
+  $(document).trigger('click');
+  equal(clicked, 0);
+  $(document.body).trigger('click');
+  equal(clicked, 1);
+
+  $(document).off('click.foo', 'body', handle);
+  $(document.body).trigger('click');
+  equal(clicked, 1);
+});
