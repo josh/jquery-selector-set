@@ -48,14 +48,20 @@ test('bind/unbind namespaced click handler to document', function() {
   equal(clicked, 0);
 
   $(document).on('click.foo', handle);
+  $(document).on('click.bar', handle);
   $(document).trigger('click');
-  equal(clicked, 1);
-  $(document.body).trigger('click');
   equal(clicked, 2);
+  $(document.body).trigger('click');
+  equal(clicked, 4);
+  $(document.body).trigger('click.foo');
+  equal(clicked, 5);
 
   $(document).off('click.foo', handle);
+  $(document).off('click.bar', handle);
   $(document).trigger('click');
-  equal(clicked, 2);
+  $(document).trigger('click.foo');
+  $(document).trigger('click.bar');
+  equal(clicked, 5);
 });
 
 test('bind/unbind delegated namespaced click handler to document', function() {
@@ -68,14 +74,20 @@ test('bind/unbind delegated namespaced click handler to document', function() {
   equal(clicked, 0);
 
   $(document).on('click.foo', 'body', handle);
+  $(document).on('click.bar', 'body', handle);
   $(document).trigger('click');
   equal(clicked, 0);
   $(document.body).trigger('click');
-  equal(clicked, 1);
+  equal(clicked, 2);
+  $(document.body).trigger('click.foo');
+  equal(clicked, 3);
 
   $(document).off('click.foo', 'body', handle);
+  $(document).off('click.bar', 'body', handle);
   $(document.body).trigger('click');
-  equal(clicked, 1);
+  $(document.body).trigger('click.foo');
+  $(document.body).trigger('click.bar');
+  equal(clicked, 3);
 });
 
 test('return false from delegated document click handler', function() {
