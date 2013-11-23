@@ -21,6 +21,11 @@ $ curl -O https://raw.github.com/josh/selector-set/master/selector-set.js
 ```
 
 
+## Supported jQuery versions
+
+This plugin is currently tested on jQuery 2.0.x.
+
+
 ## Development
 
 Clone the repository from GitHub.
