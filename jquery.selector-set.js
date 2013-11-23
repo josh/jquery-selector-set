@@ -5,6 +5,10 @@
   var originalEventRemove = $.event.remove;
   var handleObjs = {};
 
+  if (!SelectorSet) {
+    throw "SelectorSet undefined - https://github.com/josh/jquery-selector-set";
+  }
+
   function selectorSetHandlers(event) {
     var handlerQueue = [],
         cur = event.target,
