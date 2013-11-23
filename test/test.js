@@ -18,7 +18,47 @@ test('bind/unbind click handler to document', function() {
   equal(clicked, 2);
 });
 
-test('bind/unbind delegated click handler to document', function() {
+test('bind/unbind click handler to document element', function() {
+  var clicked = 0;
+
+  function handle() {
+    clicked++;
+  }
+
+  equal(clicked, 0);
+
+  $(document.documentElement).on('click', handle);
+  $(document.documentElement).trigger('click');
+  equal(clicked, 1);
+  $(document.body).trigger('click');
+  equal(clicked, 2);
+
+  $(document.documentElement).off('click', handle);
+  $(document.documentElement).trigger('click');
+  equal(clicked, 2);
+});
+
+test('bind/unbind click handler to window', function() {
+  var clicked = 0;
+
+  function handle() {
+    clicked++;
+  }
+
+  equal(clicked, 0);
+
+  $(window).on('click', handle);
+  $(window).trigger('click');
+  equal(clicked, 1);
+  $(document).trigger('click');
+  equal(clicked, 2);
+
+  $(window).off('click', handle);
+  $(window).trigger('click');
+  equal(clicked, 2);
+});
+
+test('bind/unbind delegated tag name click handler to document', function() {
   var clicked = 0;
 
   function handle() {
@@ -36,6 +76,48 @@ test('bind/unbind delegated click handler to document', function() {
   $(document).off('click', 'body', handle);
   $(document.body).trigger('click');
   equal(clicked, 1);
+});
+
+test('bind/unbind delegated class click handler to document', function() {
+  var clicked = 0;
+
+  function handle() {
+    clicked++;
+  }
+
+  equal(clicked, 0);
+
+  $(document).on('click', '.foo', handle);
+  document.body.className = 'foo';
+  $(document).trigger('click');
+  equal(clicked, 0);
+  $(document.body).trigger('click');
+  equal(clicked, 1);
+
+  $(document).off('click', '.foo', handle);
+  document.body.className = '';
+  $(document.body).trigger('click');
+  equal(clicked, 1);
+});
+
+test('bind/unbind delegated universal click handler to document', function() {
+  var clicked = 0;
+
+  function handle() {
+    clicked++;
+  }
+
+  equal(clicked, 0);
+
+  $(document).on('click', '*', handle);
+  $(document).trigger('click');
+  equal(clicked, 0);
+  $(document.body).trigger('click');
+  equal(clicked, 2);
+
+  $(document).off('click', '*', handle);
+  $(document.body).trigger('click');
+  equal(clicked, 2);
 });
 
 test('bind/unbind namespaced click handler to document', function() {

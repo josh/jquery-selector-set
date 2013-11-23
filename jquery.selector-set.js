@@ -22,11 +22,14 @@
         set = event.handleObj.selectorSet;
 
     do {
+      if (cur.nodeType !== 1) {
+        break;
+      }
       var matches = set.matches(cur);
       if (matches.length) {
         handlerQueue.push({elem: cur, handlers: matches});
       }
-    } while (cur = cur.parentNode);
+    } while (cur = cur.parentElement);
 
     return handlerQueue;
   }
