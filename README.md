@@ -23,7 +23,7 @@ $ curl -O https://raw.github.com/josh/selector-set/master/selector-set.js
 
 ## Supported jQuery versions
 
-This plugin is currently tested on jQuery 2.0.x.
+This plugin is currently tested on jQuery 1.8.x, 1.9.x, 1.10.x, 2.0.x and 2.1.x.
 
 
 ## Development
