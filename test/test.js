@@ -192,6 +192,28 @@ test('bind/unbind delegated namespaced click handler to document', function() {
   equal(clicked, 3);
 });
 
+test('bind/unbind focus event handler to document', function() {
+  var focused = 0;
+
+  function handle() {
+    focused++;
+  }
+
+  equal(focused, 0);
+
+  $(document).on('focus', 'body', handle);
+  $(document).on('focusin', 'body', handle);
+  $(document).focus();
+  equal(focused, 0);
+  $(document.body).focus();
+  equal(focused, 2);
+
+  $(document).off('focus', 'body', handle);
+  $(document).off('focusin', 'body', handle);
+  $(document.body).focus();
+  equal(focused, 2);
+});
+
 test('return false from delegated document click handler', function() {
   function handle() {
     return false;

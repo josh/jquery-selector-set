@@ -56,6 +56,11 @@
 
   $.event.add = function(elem, types, handler, data, selector) {
     if (elem === document && !data && selector) {
+      var special = $.event.special[types] || {};
+      if (special.delegateType) {
+        types = special.delegateType;
+      }
+
       var handleObj = handleObjs[types];
       if (!handleObj) {
         handleObj = handleObjs[types] = {
