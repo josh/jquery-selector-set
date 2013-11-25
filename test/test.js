@@ -192,6 +192,32 @@ test('bind/unbind delegated namespaced click handler to document', function() {
   equal(clicked, 3);
 });
 
+test('bind/unbind delegated multiple namespaced click handler to document', function() {
+  var clicked = 0;
+
+  function handle() {
+    clicked++;
+  }
+
+  equal(clicked, 0);
+
+  $(document).on('click.foo.bar', 'body', handle);
+  $(document).trigger('click');
+  equal(clicked, 0);
+  $(document.body).trigger('click');
+  equal(clicked, 1);
+  $(document.body).trigger('click.foo');
+  equal(clicked, 2);
+  $(document.body).trigger('click.bar');
+  equal(clicked, 3);
+
+  $(document).off('click.foo', 'body', handle);
+  $(document.body).trigger('click');
+  $(document.body).trigger('click.foo');
+  $(document.body).trigger('click.bar');
+  equal(clicked, 3);
+});
+
 test('bind/unbind focus event handler to document', function() {
   var focused = 0;
 
@@ -246,6 +272,37 @@ test('bind/unbind namespaced focus event handler to document', function() {
   equal(focused, 10);
   $(document.body).trigger('focus.foo');
   equal(focused, 10);
+});
+
+test('bind/unbind delegated click and focus handler to document', function() {
+  var handled = 0;
+
+  function handle() {
+    handled++;
+  }
+
+  equal(handled, 0);
+
+  $(document).on('click focus', 'body', handle);
+  $(document).trigger('click');
+  $(document).trigger('focus');
+  equal(handled, 0);
+  $(document.body).trigger('click');
+  equal(handled, 1);
+  $(document.body).trigger('focus');
+  equal(handled, 2);
+
+  $(document).off('click', 'body', handle);
+  $(document.body).trigger('click');
+  equal(handled, 2);
+  $(document.body).trigger('focus');
+  equal(handled, 3);
+
+  $(document).off('focus', 'body', handle);
+  $(document.body).trigger('click');
+  equal(handled, 3);
+  $(document.body).trigger('focus');
+  equal(handled, 3);
 });
 
 test('return false from delegated document click handler', function() {

@@ -54,38 +54,52 @@
     }
   }
 
-  $.event.add = function(elem, types, handler, data, selector) {
-    if (elem === document && !data && selector && !types.match(/\./)) {
-      var special = $.event.special[types] || {};
-      if (special.delegateType) {
-        types = special.delegateType;
-      }
+  function eachEventType(types, cb) {
+    var t, type, special;
 
-      var handleObj = handleObjs[types];
-      if (!handleObj) {
-        handleObj = handleObjs[types] = {
-          handler: selectorSetHandler,
-          selectorSet: new SelectorSet()
-        };
-        handleObj.selectorSet.matchesSelector = $.find.matchesSelector;
-        originalEventAdd.call(this, elem, types, handleObj);
-      }
-      handleObj.selectorSet.add(selector, handler);
-      $.expr.cacheLength++;
-      $.find.compile(selector);
+    types = types.match(/\S+/g);
+    t = types.length;
+
+    while (t--) {
+      type = types[t];
+      special = $.event.special[type] || {};
+      type = special.delegateType || type;
+      cb(type);
+    }
+  }
+
+  $.event.add = function(elem, types, handler, data, selector) {
+    var self = this;
+    if (elem === document && !types.match(/\./) && !data && selector) {
+      eachEventType(types, function(type) {
+        var handleObj = handleObjs[type];
+        if (!handleObj) {
+          handleObj = handleObjs[type] = {
+            handler: selectorSetHandler,
+            selectorSet: new SelectorSet()
+          };
+          handleObj.selectorSet.matchesSelector = $.find.matchesSelector;
+          originalEventAdd.call(self, elem, type, handleObj);
+        }
+        handleObj.selectorSet.add(selector, handler);
+        $.expr.cacheLength++;
+        $.find.compile(selector);
+      });
     } else {
-      originalEventAdd.call(this, elem, types, handler, data, selector);
+      originalEventAdd.call(self, elem, types, handler, data, selector);
     }
   };
 
   $.event.remove = function(elem, types, handler, selector, mappedTypes) {
-    if (elem === document && selector && !types.match(/\./)) {
-      var handleObj = handleObjs[types];
-      if (handleObj) {
-        handleObj.selectorSet.remove(selector, handler);
-      }
-    } else {
-      originalEventRemove.call(this, elem, types, handler, selector, mappedTypes);
+    var self = this;
+    if (elem === document && !types.match(/\./) && selector) {
+      eachEventType(types, function(type) {
+        var handleObj = handleObjs[type];
+        if (handleObj) {
+          handleObj.selectorSet.remove(selector, handler);
+        }
+      });
     }
+    originalEventRemove.call(self, elem, types, handler, selector, mappedTypes);
   };
 })(window, jQuery);
