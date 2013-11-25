@@ -55,7 +55,7 @@
   }
 
   $.event.add = function(elem, types, handler, data, selector) {
-    if (elem === document && !data && selector) {
+    if (elem === document && !data && selector && !types.match(/\./)) {
       var special = $.event.special[types] || {};
       if (special.delegateType) {
         types = special.delegateType;
@@ -79,7 +79,7 @@
   };
 
   $.event.remove = function(elem, types, handler, selector, mappedTypes) {
-    if (elem === document && selector) {
+    if (elem === document && selector && !types.match(/\./)) {
       var handleObj = handleObjs[types];
       if (handleObj) {
         handleObj.selectorSet.remove(selector, handler);
