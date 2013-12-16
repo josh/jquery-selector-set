@@ -44,7 +44,7 @@ module.exports = function(grunt) {
       }
     },
     qunit: {
-      all: ['test/test*.html']
+      all: ['test/unpatched/*.html', 'test/patched/*.html']
     },
     watch: {
       grunt: {
