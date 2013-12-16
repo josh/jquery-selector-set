@@ -10,7 +10,7 @@
   ],
   "dependencies": {
     "jquery": "~2.0",
-    "selector-set": "~0.3"
+    "selector-set": "~1.0"
   },
   "devDependencies": {
     "qunit": "~1.12.0"
