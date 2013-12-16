@@ -10,19 +10,28 @@
   var originalEventRemove = $.event.remove;
   var handleObjs = {};
 
+  // Throw an error if SelectorSet dependency is undefined.
   if (!SelectorSet) {
     throw "SelectorSet undefined - https://github.com/josh/jquery-selector-set";
   }
 
+  // Internal: Compute event propagation path using SelectorSet's fast match.
+  //
+  // event - jQuery Event
+  //
+  // Returns an Array of {elem: Element, handlers: Array}.
   function selectorSetHandlers(event) {
     var handlerQueue = [],
         cur = event.target,
         set = event.handleObj.selectorSet;
 
     do {
+      // Stop if cur is no longer an Element. Normally breaks at document.
       if (cur.nodeType !== 1) {
         break;
       }
+
+      // Use SelectorSet#matches.
       var matches = set.matches(cur);
       if (matches.length) {
         handlerQueue.push({elem: cur, handlers: matches});
@@ -32,7 +41,13 @@
     return handlerQueue;
   }
 
-  // Duplicated from $.event.dispatch
+  // Internal: Handle delegated event handler.
+  //
+  // Mostly duplicated from $.event.dispatch.
+  //
+  // event - jQuery Event
+  //
+  // Returns nothing.
   function selectorSetHandler(event) {
     var handlerQueue = selectorSetHandlers(event);
     var matched, i = 0;
@@ -54,6 +69,15 @@
     }
   }
 
+  // Public: Monkey patch $.event.add.
+  //
+  // elem     - Target Element
+  // types    - String event types (including namespaces)
+  // handler  - Function
+  // data     - Optional data object
+  // selector - String delegated selector
+  //
+  // Returns nothing.
   $.event.add = function(elem, types, handler, data, selector) {
     if (elem === document && !types.match(/\./) && !data && selector) {
       var ts = types.match(/\S+/g);
@@ -82,6 +106,15 @@
     }
   };
 
+  // Public: Monkey patch $.event.remove.
+  //
+  // elem        - Target Element
+  // types       - String event types (including namespaces)
+  // handler     - Function
+  // selector    - String delegated selector
+  // mappedTypes - Boolean
+  //
+  // Returns nothing.
   $.event.remove = function(elem, types, handler, selector, mappedTypes) {
     if (elem === document && !types.match(/\./) && selector) {
       var ts = types.match(/\S+/g);
