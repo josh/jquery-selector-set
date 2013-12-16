@@ -54,24 +54,17 @@
     }
   }
 
-  function eachEventType(types, cb) {
-    var t, type, special;
-
-    types = types.match(/\S+/g);
-    t = types.length;
-
-    while (t--) {
-      type = types[t];
-      special = $.event.special[type] || {};
-      type = special.delegateType || type;
-      cb(type);
-    }
-  }
-
   $.event.add = function(elem, types, handler, data, selector) {
     var self = this;
     if (elem === document && !types.match(/\./) && !data && selector) {
-      eachEventType(types, function(type) {
+      var ts = types.match(/\S+/g);
+      var t = ts.length;
+
+      while (t--) {
+        var type = ts[t];
+        var special = $.event.special[type] || {};
+        type = special.delegateType || type;
+
         var handleObj = handleObjs[type];
         if (!handleObj) {
           handleObj = handleObjs[type] = {
@@ -84,7 +77,7 @@
         handleObj.selectorSet.add(selector, handler);
         $.expr.cacheLength++;
         $.find.compile(selector);
-      });
+      }
     } else {
       originalEventAdd.call(self, elem, types, handler, data, selector);
     }
@@ -93,12 +86,19 @@
   $.event.remove = function(elem, types, handler, selector, mappedTypes) {
     var self = this;
     if (elem === document && !types.match(/\./) && selector) {
-      eachEventType(types, function(type) {
+      var ts = types.match(/\S+/g);
+      var t = ts.length;
+
+      while (t--) {
+        var type = ts[t];
+        var special = $.event.special[type] || {};
+        type = special.delegateType || type;
+
         var handleObj = handleObjs[type];
         if (handleObj) {
           handleObj.selectorSet.remove(selector, handler);
         }
-      });
+      }
     }
     originalEventRemove.call(self, elem, types, handler, selector, mappedTypes);
   };
