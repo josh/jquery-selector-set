@@ -1,12 +1,11 @@
 module.exports = function(grunt) {
-  'use strict';
-
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     jshint: {
       options: {
         curly: true,
         eqeqeq: true,
+        es3: true,
         immed: true,
         indent: 2,
         latedef: true,
