@@ -55,7 +55,6 @@
   }
 
   $.event.add = function(elem, types, handler, data, selector) {
-    var self = this;
     if (elem === document && !types.match(/\./) && !data && selector) {
       var ts = types.match(/\S+/g);
       var t = ts.length;
@@ -72,19 +71,18 @@
             selectorSet: new SelectorSet()
           };
           handleObj.selectorSet.matchesSelector = $.find.matchesSelector;
-          originalEventAdd.call(self, elem, type, handleObj);
+          originalEventAdd.call(this, elem, type, handleObj);
         }
         handleObj.selectorSet.add(selector, handler);
         $.expr.cacheLength++;
         $.find.compile(selector);
       }
     } else {
-      originalEventAdd.call(self, elem, types, handler, data, selector);
+      originalEventAdd.call(this, elem, types, handler, data, selector);
     }
   };
 
   $.event.remove = function(elem, types, handler, selector, mappedTypes) {
-    var self = this;
     if (elem === document && !types.match(/\./) && selector) {
       var ts = types.match(/\S+/g);
       var t = ts.length;
@@ -100,6 +98,6 @@
         }
       }
     }
-    originalEventRemove.call(self, elem, types, handler, selector, mappedTypes);
+    originalEventRemove.call(this, elem, types, handler, selector, mappedTypes);
   };
 })(window, jQuery);
