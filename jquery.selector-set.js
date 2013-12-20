@@ -4,10 +4,10 @@
 //= require selector-set
 
 (function(window, $) {
-  var originalEventAdd, originalEventRemove;
-
   var document = window.document;
   var SelectorSet = window.SelectorSet;
+  var originalEventAdd = $.event.add;
+  var originalEventRemove = $.event.remove;
   var handleObjs = {};
 
   // Throw an error if SelectorSet dependency is undefined.
@@ -78,7 +78,7 @@
   // selector - String delegated selector
   //
   // Returns nothing.
-  function optimizedEventAdd(elem, types, handler, data, selector) {
+  $.event.add = function(elem, types, handler, data, selector) {
     if (elem === document && !types.match(/\./) && !data && selector) {
       var ts = types.match(/\S+/g);
       var t = ts.length;
@@ -104,7 +104,7 @@
     } else {
       originalEventAdd.call(this, elem, types, handler, data, selector);
     }
-  }
+  };
 
   // Public: Monkey patch $.event.remove.
   //
@@ -115,7 +115,7 @@
   // mappedTypes - Boolean
   //
   // Returns nothing.
-  function optimizedEventRemove(elem, types, handler, selector, mappedTypes) {
+  $.event.remove = function(elem, types, handler, selector, mappedTypes) {
     if (elem === document && !types.match(/\./) && selector) {
       var ts = types.match(/\S+/g);
       var t = ts.length;
@@ -132,32 +132,5 @@
       }
     }
     originalEventRemove.call(this, elem, types, handler, selector, mappedTypes);
-  }
-
-  // Public: Install optimizations.
-  function install() {
-    originalEventAdd = $.event.add;
-    originalEventRemove = $.event.remove;
-    $.event.add = optimizedEventAdd;
-    $.event.remove = optimizedEventRemove;
-  }
-
-  // Public: Uninstall optimizations.
-  function uninstall() {
-    $.event.add = originalEventAdd;
-    $.event.remove = originalEventRemove;
-  }
-
-  // Public: Export install and uninstall functions as
-  //
-  //   $.selectorSet.install()
-  //   $.selectorSet.uninstall()
-  //
-  $.selectorSet = {
-    install: install,
-    uninstall: uninstall
   };
-
-  // Install by default.
-  install();
 })(window, jQuery);
