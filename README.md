@@ -26,6 +26,15 @@ $ curl -O https://raw.github.com/josh/selector-set/master/selector-set.js
 This plugin is currently tested on jQuery 1.8.x, 1.9.x, 1.10.x, 2.0.x and 2.1.x.
 
 
+## Performance
+
+This patch improves the event dispatch code path for delegated jQuery event handlers. For any user event, `click`, `keydown`, etc, `jQuery.event.dispatch` is invoked. This also applies to custom events using trigger: `$(el).trigger('menu.open')`.
+
+This jsPerf shows a typical GitHub code snippet (a typical deeply nested tree) and a handful of globally delegated selectors.
+
+http://jsperf.com/jquery-selector-set-trigger
+
+
 ## Development
 
 Clone the repository from GitHub.
