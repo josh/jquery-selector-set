@@ -21,6 +21,19 @@ $ curl -O https://raw.github.com/josh/selector-set/master/selector-set.js
 ```
 
 
+### Usage
+
+There are no new APIs, use jQuery event handlers as you would.
+
+Be sure to load the patch right after you load jQuery.
+
+``` html
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="jquery.selector-set.js"></script>
+<script type="text/javascript" src="app/foo.js"></script>
+<script type="text/javascript" src="app/bar.js"></script>
+```
+
 ## Supported jQuery versions
 
 This plugin is currently tested on jQuery 1.8.x, 1.9.x, 1.10.x, 2.0.x and 2.1.x.
