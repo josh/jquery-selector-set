@@ -29,6 +29,7 @@ Be sure to load the patch right after you load jQuery.
 
 ``` html
 <script src="jquery.js"></script>
+<script src="selector-set.js"></script>
 <script src="jquery.selector-set.js"></script>
 <script src="app/foo.js"></script>
 <script src="app/bar.js"></script>
