@@ -28,10 +28,10 @@ There are no new APIs, use jQuery event handlers as you would.
 Be sure to load the patch right after you load jQuery.
 
 ``` html
-<script type="text/javascript" src="jquery.js"></script>
-<script type="text/javascript" src="jquery.selector-set.js"></script>
-<script type="text/javascript" src="app/foo.js"></script>
-<script type="text/javascript" src="app/bar.js"></script>
+<script src="jquery.js"></script>
+<script src="jquery.selector-set.js"></script>
+<script src="app/foo.js"></script>
+<script src="app/bar.js"></script>
 ```
 
 ## Supported jQuery versions
