@@ -46,6 +46,27 @@ module.exports = function(grunt) {
     qunit: {
       all: ['test/unpatched/*.html', 'test/patched/*.html']
     },
+    connect: {
+      server: {
+        options: {
+          base: '',
+          port: 9999
+        }
+      }
+    },
+    'saucelabs-qunit': {
+      all: {
+        options: {
+          urls: ['http://127.0.0.1:9999/test/patched/bower.html'],
+          tunnelTimeout: 5,
+          build: process.env.TRAVIS_JOB_ID,
+          concurrency: 1,
+          browsers: [
+            { browserName: 'chrome', platform: 'Windows 8.1' }
+          ]
+        }
+      }
+    },
     watch: {
       grunt: {
         files: ['<%= jshint.grunt.src %>'],
@@ -69,6 +90,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-saucelabs');
 
   grunt.registerTask('test', ['jshint', 'qunit']);
-  grunt.registerTask('travis', ['test']);
+  grunt.registerTask('sauce', ['connect', 'saucelabs-qunit']);
+  grunt.registerTask('travis', ['test', 'sauce']);
   grunt.registerTask('default', ['jshint']);
 };
