@@ -57,7 +57,20 @@ module.exports = function(grunt) {
     'saucelabs-qunit': {
       all: {
         options: {
-          urls: ['http://127.0.0.1:9999/test/patched/bower.html'],
+          urls: [
+            'http://127.0.0.1:9999/test/unpatched/1-8.html',
+            'http://127.0.0.1:9999/test/unpatched/1-9.html',
+            'http://127.0.0.1:9999/test/unpatched/1-10.html',
+            'http://127.0.0.1:9999/test/unpatched/2-0.html',
+            'http://127.0.0.1:9999/test/unpatched/2-1.html',
+            'http://127.0.0.1:9999/test/unpatched/bower.html',
+            'http://127.0.0.1:9999/test/patched/1-8.html',
+            'http://127.0.0.1:9999/test/patched/1-9.html',
+            'http://127.0.0.1:9999/test/patched/1-10.html',
+            'http://127.0.0.1:9999/test/patched/2-0.html',
+            'http://127.0.0.1:9999/test/patched/2-1.html',
+            'http://127.0.0.1:9999/test/patched/bower.html'
+          ],
           tunnelTimeout: 5,
           build: process.env.TRAVIS_JOB_ID,
           concurrency: 1,
