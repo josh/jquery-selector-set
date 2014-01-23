@@ -74,9 +74,7 @@ module.exports = function(grunt) {
           tunnelTimeout: 5,
           build: process.env.TRAVIS_JOB_ID,
           concurrency: 1,
-          browsers: [
-            { browserName: 'chrome', platform: 'Windows 8.1' }
-          ]
+          browsers: [ { browserName: 'chrome' } ]
         }
       }
     },
