@@ -9,8 +9,7 @@
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.7.0",
     "grunt-contrib-qunit": "~0.3.0",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt-lib-phantomjs": "~0.4.0"
+    "grunt-contrib-watch": "~0.5.3"
   },
   "scripts": {
     "install": "bower install",
