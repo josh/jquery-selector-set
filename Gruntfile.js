@@ -69,5 +69,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-saucelabs');
 
   grunt.registerTask('test', ['jshint', 'qunit']);
+  grunt.registerTask('travis', ['test']);
   grunt.registerTask('default', ['jshint']);
 };
