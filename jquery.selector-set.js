@@ -116,10 +116,7 @@
   //
   // Returns nothing.
   $.event.remove = function(elem, types, handler, selector, mappedTypes) {
-    if (typeof types === "undefined") {
-      types = "";
-    }
-    if (elem === document && !types.match(/\./) && selector) {
+    if (elem === document && types && !types.match(/\./) && selector) {
       var ts = types.match(/\S+/g);
       var t = ts.length;
 
