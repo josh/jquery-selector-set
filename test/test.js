@@ -18,6 +18,33 @@ test('bind/unbind click handler to document', function() {
   equal(clicked, 2);
 });
 
+test('unbind all event handlers from document', function() {
+  var clicked1 = 0;
+  var clicked2 = 0;
+
+  function handle1() {
+    clicked1++;
+  }
+
+  function handle2() {
+    clicked2++;
+  }
+
+  equal(clicked1, 0);
+  equal(clicked2, 0);
+
+  $(document).on('click', handle1);
+  $(document).on('click', handle2);
+  $(document).trigger('click');
+  equal(clicked1, 1);
+  equal(clicked2, 1);
+
+  $(document).off();
+  $(document).trigger('click');
+  equal(clicked1, 1);
+  equal(clicked2, 1);
+});
+
 test('bind/unbind click handler to document element', function() {
   var clicked = 0;
 
