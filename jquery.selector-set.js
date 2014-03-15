@@ -99,7 +99,11 @@
         }
         handleObj.selectorSet.add(selector, handler);
         $.expr.cacheLength++;
-        $.find.compile(selector);
+
+        // if sizzle is available
+        if ($.find.compile) {
+          $.find.compile(selector);
+        }
       }
     } else {
       originalEventAdd.call(this, elem, types, handler, data, selector);
