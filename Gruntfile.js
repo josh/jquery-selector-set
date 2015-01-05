@@ -35,6 +35,7 @@ module.exports = function(grunt) {
         options: {
           jquery: true,
           globals: {
+            'QUnit': false,
             'test': false,
             'ok': false,
             'equal': false
