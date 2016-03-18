@@ -21,7 +21,6 @@
     "grunt-saucelabs": "8.4.1"
   },
   "scripts": {
-    "install": "bower install",
     "test": "grunt test"
   },
   "files": [
