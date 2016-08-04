@@ -72,12 +72,16 @@ module.exports = function(grunt) {
             'http://127.0.0.1:9999/test/unpatched/1-11.html',
             'http://127.0.0.1:9999/test/unpatched/2-0.html',
             'http://127.0.0.1:9999/test/unpatched/2-1.html',
+            'http://127.0.0.1:9999/test/unpatched/3-0.html',
+            'http://127.0.0.1:9999/test/unpatched/3-1.html',
             'http://127.0.0.1:9999/test/patched/1-8.html',
             'http://127.0.0.1:9999/test/patched/1-9.html',
             'http://127.0.0.1:9999/test/patched/1-10.html',
             'http://127.0.0.1:9999/test/patched/1-11.html',
             'http://127.0.0.1:9999/test/patched/2-0.html',
-            'http://127.0.0.1:9999/test/patched/2-1.html'
+            'http://127.0.0.1:9999/test/patched/2-1.html',
+            'http://127.0.0.1:9999/test/patched/3-0.html',
+            'http://127.0.0.1:9999/test/patched/3-1.html'
           ],
           tunnelTimeout: 5,
           build: process.env.TRAVIS_JOB_ID,
