@@ -30,7 +30,7 @@ function selectorSetHandlers(event) {
     if (matches.length) {
       handlerQueue.push({elem: cur, handlers: matches});
     }
-  } while (cur = cur.parentElement);
+  } while (cur = cur.parentNode);
 
   return handlerQueue;
 }
