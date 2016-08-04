@@ -28,18 +28,25 @@ module.exports = function(grunt) {
       src: {
         src: ['jquery.selector-set.js'],
         options: {
-          jquery: true
+          jquery: true,
+          globals: {
+            define: true,
+            require: true,
+            module: true
+          }
+        }
+      },
+      srcnext: {
+        src: ['jquery.selector-set.next.js'],
+        options: {
+          esnext: true,
+          module: true
         }
       },
       test: {
         options: {
           jquery: true,
-          globals: {
-            'QUnit': false,
-            'test': false,
-            'ok': false,
-            'equal': false
-          }
+          qunit: true
         },
         src: ['test/*.js']
       }
