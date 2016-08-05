@@ -18,7 +18,7 @@
 
   // Throw an error if SelectorSet dependency is undefined.
   if (!SelectorSet) {
-    throw "SelectorSet undefined - https://github.com/josh/jquery-selector-set";
+    throw 'SelectorSet undefined - https://github.com/josh/jquery-selector-set';
   }
 
   // Internal: Compute event propagation path using SelectorSet's fast match.
@@ -42,7 +42,7 @@
       if (matches.length) {
         handlerQueue.push({elem: cur, handlers: matches});
       }
-    } while (cur = cur.parentElement);
+    } while (cur = cur.parentNode);
 
     return handlerQueue;
   }

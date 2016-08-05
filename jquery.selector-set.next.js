@@ -1,9 +1,9 @@
 // jQuery SelectorSet
 
-import $ from 'jquery'
-import SelectorSet from 'selector-set'
+import $ from 'jquery';
+import SelectorSet from 'selector-set';
 
-var document = window.document;
+var document = window.document; // jshint ignore:line
 var SelectorSet = window.SelectorSet;
 var originalEventAdd = $.event.add;
 var originalEventRemove = $.event.remove;
@@ -30,7 +30,7 @@ function selectorSetHandlers(event) {
     if (matches.length) {
       handlerQueue.push({elem: cur, handlers: matches});
     }
-  } while (cur = cur.parentElement);
+  } while (cur = cur.parentNode);
 
   return handlerQueue;
 }

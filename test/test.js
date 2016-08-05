@@ -1,3 +1,9 @@
+module('jquery.selector-set', {
+  afterEach: function() {
+    document.getElementById('qunit-fixture').innerHTML = '';
+  }
+});
+
 test('bind/unbind click handler to document', function() {
   var clicked = 0;
 
@@ -418,4 +424,19 @@ test('stopImmediatePropagation from delegated document click handler', function(
   equal(event.isDefaultPrevented(), false);
   equal(event.isPropagationStopped(), false);
   equal(event.result, undefined);
+});
+
+test('SVG as origin of event', function() {
+  document.getElementById('qunit-fixture').innerHTML =
+    '<svg height="4" version="1.1" viewBox="0 0 4 4" width="4">' +
+    '<rect x="0" y="0" width="4" height="4"></rect></svg>';
+
+  var target;
+  $(document).on('click', '#qunit-fixture', function(event) {
+    target = event.target;
+  });
+
+  var rect = document.querySelector('svg rect');
+  $(rect).trigger('click');
+  equal(target, rect);
 });
