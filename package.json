@@ -1,6 +1,6 @@
 {
   "name": "jquery-selector-set",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Speeds up jQuery event delegation by using SelectorSet for matching event targets.",
   "repository": {
     "type": "git",
