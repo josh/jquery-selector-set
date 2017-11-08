@@ -7,6 +7,7 @@
     "url": "http://github.com/josh/jquery-selector-set.git"
   },
   "main": "jquery.selector-set.js",
+  "module": "jquery.selector-set.next.js",
   "jsnext:main": "jquery.selector-set.next.js",
   "dependencies": {
     "jquery": "*",
