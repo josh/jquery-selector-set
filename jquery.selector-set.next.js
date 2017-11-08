@@ -1,10 +1,9 @@
 // jQuery SelectorSet
 
 import $ from 'jquery';
-import ImportedSelectorSet from 'selector-set';
+import SelectorSet from 'selector-set';
 
 var document = window.document; // jshint ignore:line
-var SelectorSet = ImportedSelectorSet || window.SelectorSet;
 var originalEventAdd = $.event.add;
 var originalEventRemove = $.event.remove;
 var handleObjs = {};
